@@ -16,7 +16,7 @@ protocol ItemViewControllerDelegate {
 
 class ItemViewController: UITableViewController {
     
-    var delegate: ViewController!
+    var delegate: ListItemViewController!
     var itemToEdit: Item!
     
     @IBOutlet weak var doneButton: UIBarButtonItem!

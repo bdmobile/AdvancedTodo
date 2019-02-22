@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ListItemViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (searchBarIsEmpty() == true) {
@@ -76,7 +76,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension ViewController: ItemViewControllerDelegate {
+extension ListItemViewController: ItemViewControllerDelegate {
     func ItemViewControllerDidCancel(_ controller: ItemViewController) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -97,7 +97,7 @@ extension ViewController: ItemViewControllerDelegate {
   
 }
 
-extension ViewController: UISearchBarDelegate {
+extension ListItemViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredItems = items.filter({( item : Item) -> Bool in
             return item.name.lowercased().contains(self.searchBar.text!.lowercased())
