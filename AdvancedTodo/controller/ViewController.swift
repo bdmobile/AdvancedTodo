@@ -11,8 +11,10 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var items: [Item] = [Item(name: "Item 1", check: true), Item(name:"Item 2")]
+    var filteredItems = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,19 +33,38 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: - SearchBar methods
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchBar.text?.isEmpty ?? true
+    }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
-   
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        if (searchBarIsEmpty() == true) {
+            return self.items.count
+        } else {
+            return self.filteredItems.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier") as! ItemViewCell
-        let item = items[indexPath.row]
-        cell.checkLabel.isHidden = !item.check
-        cell.nameLabel.text = item.name
+        if (searchBarIsEmpty()) {
+            let item = items[indexPath.row]
+            cell.checkLabel.isHidden = !item.check
+            cell.nameLabel.text = item.name
+            
+        } else {
+            let item = filteredItems[indexPath.row]
+            cell.checkLabel.isHidden = !item.check
+            cell.nameLabel.text = item.name
+            
+        }
+        
         return cell
     }
     
@@ -76,3 +97,11 @@ extension ViewController: ItemViewControllerDelegate {
   
 }
 
+extension ViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredItems = items.filter({( item : Item) -> Bool in
+            return item.name.lowercased().contains(self.searchBar.text!.lowercased())
+        })
+        tableView.reloadData()
+    }
+}
