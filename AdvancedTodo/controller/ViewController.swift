@@ -10,44 +10,26 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
     
     var items: [Item] = [Item(name: "Item 1", check: true), Item(name:"Item 2")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupConstraints()
     }
     
-    func setupConstraints() {
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        navigationBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        navigationBar.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        navigationBar.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-    }
-    
-    @IBAction func addItemClick(_ sender: Any) {
-        let alerController = UIAlertController(title: "Doing", message: "News Items ", preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "Ok", style: .default) {(action) in
-            self.items.append(Item(name:(alerController.textFields![0] as UITextField).text!))
-            self.tableView.insertRows(at: [IndexPath(row: self.items.count-1, section: 0)], with: .none)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "addItem") {
+            let itemViewController = (segue.destination as! UINavigationController).topViewController as! ItemViewController
+            itemViewController.delegate = self
+        } else if (segue.identifier == "editItem") {
+            if let cell = sender as? UITableViewCell,
+                let indexPath = tableView.indexPath(for: cell){
+                let addItemViewController = (segue.destination as! UINavigationController).topViewController as! ItemViewController
+                addItemViewController.itemToEdit = items[indexPath.row]
+                addItemViewController.delegate = self
+            }
         }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alerController.addTextField(configurationHandler: { (textField) in
-            textField.placeholder = "Enter Item Name"
-        })
-        
-        alerController.addAction(cancelAction)
-        alerController.addAction(okAction)
-        
-        present(alerController, animated: true, completion: nil)
-        
     }
 }
 
@@ -58,10 +40,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier") as! ItemViewCell
         let item = items[indexPath.row]
-        cell.textLabel?.text = item.name
-        cell.accessoryType = item.check ? .checkmark : .none
+        cell.checkLabel.isHidden = !item.check
+        cell.nameLabel.text = item.name
         return cell
     }
     
@@ -71,5 +53,26 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.reloadRows(at: [indexPath], with: .none)
     }
     
+}
+
+extension ViewController: ItemViewControllerDelegate {
+    func ItemViewControllerDidCancel(_ controller: ItemViewController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func ItemViewControllerDone(_ controller: ItemViewController, addingFinish item: Item) {
+        self.dismiss(animated: true, completion: nil)
+        self.items.append(item)
+        self.tableView.insertRows(at: [IndexPath(row: self.items.count-1, section: 0)], with: .none)
+    }
+    
+    func ItemViewControllerDone(_ controller: ItemViewController, editingFinish item: Item) {
+        self.dismiss(animated: false, completion: nil)
+        if let row = self.items.firstIndex(where: {$0 === item}) {
+            self.items[row] = item
+            tableView.reloadRows(at: [IndexPath(row: row, section:0)], with: .none)
+        }
+    }
+  
 }
 
