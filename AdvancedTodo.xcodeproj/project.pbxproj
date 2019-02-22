@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0822FD042220341D00F92330 /* ItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0822FD032220341D00F92330 /* ItemViewCell.swift */; };
+		0822FD072220510700F92330 /* SaveDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0822FD062220510700F92330 /* SaveDataManager.swift */; };
 		085C19DB221FEBD500D56A17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19DA221FEBD500D56A17 /* AppDelegate.swift */; };
 		085C19DD221FEBD500D56A17 /* ListItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19DC221FEBD500D56A17 /* ListItemViewController.swift */; };
 		085C19E0221FEBD500D56A17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085C19DE221FEBD500D56A17 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		0822FD032220341D00F92330 /* ItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewCell.swift; sourceTree = "<group>"; };
+		0822FD062220510700F92330 /* SaveDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDataManager.swift; sourceTree = "<group>"; };
 		085C19D7221FEBD500D56A17 /* AdvancedTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdvancedTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085C19DA221FEBD500D56A17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		085C19DC221FEBD500D56A17 /* ListItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemViewController.swift; sourceTree = "<group>"; };
@@ -41,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0822FD05222050EF00F92330 /* manager */ = {
+			isa = PBXGroup;
+			children = (
+				0822FD062220510700F92330 /* SaveDataManager.swift */,
+			);
+			path = manager;
+			sourceTree = "<group>";
+		};
 		085C19CE221FEBD500D56A17 = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +70,7 @@
 		085C19D9221FEBD500D56A17 /* AdvancedTodo */ = {
 			isa = PBXGroup;
 			children = (
+				0822FD05222050EF00F92330 /* manager */,
 				085C19EE222010FB00D56A17 /* model */,
 				085C19F02220110800D56A17 /* controller */,
 				085C19EF2220110300D56A17 /* vue */,
@@ -172,6 +183,7 @@
 				085C19DD221FEBD500D56A17 /* ListItemViewController.swift in Sources */,
 				085C19F4222026A600D56A17 /* ItemViewController.swift in Sources */,
 				085C19ED22200DEC00D56A17 /* Item.swift in Sources */,
+				0822FD072220510700F92330 /* SaveDataManager.swift in Sources */,
 				085C19DB221FEBD500D56A17 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
