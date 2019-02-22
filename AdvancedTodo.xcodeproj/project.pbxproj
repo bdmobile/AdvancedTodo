@@ -7,23 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0822FD042220341D00F92330 /* ItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0822FD032220341D00F92330 /* ItemViewCell.swift */; };
 		085C19DB221FEBD500D56A17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19DA221FEBD500D56A17 /* AppDelegate.swift */; };
-		085C19DD221FEBD500D56A17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19DC221FEBD500D56A17 /* ViewController.swift */; };
+		085C19DD221FEBD500D56A17 /* ListItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19DC221FEBD500D56A17 /* ListItemViewController.swift */; };
 		085C19E0221FEBD500D56A17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085C19DE221FEBD500D56A17 /* Main.storyboard */; };
 		085C19E2221FEBD700D56A17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C19E1221FEBD700D56A17 /* Assets.xcassets */; };
 		085C19E5221FEBD700D56A17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085C19E3221FEBD700D56A17 /* LaunchScreen.storyboard */; };
 		085C19ED22200DEC00D56A17 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19EC22200DEC00D56A17 /* Item.swift */; };
+		085C19F4222026A600D56A17 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19F3222026A600D56A17 /* ItemViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0822FD032220341D00F92330 /* ItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewCell.swift; sourceTree = "<group>"; };
 		085C19D7221FEBD500D56A17 /* AdvancedTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdvancedTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085C19DA221FEBD500D56A17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		085C19DC221FEBD500D56A17 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		085C19DC221FEBD500D56A17 /* ListItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemViewController.swift; sourceTree = "<group>"; };
 		085C19DF221FEBD500D56A17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		085C19E1221FEBD700D56A17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		085C19E4221FEBD700D56A17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		085C19E6221FEBD700D56A17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085C19EC22200DEC00D56A17 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		085C19F3222026A600D56A17 /* ItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +90,9 @@
 		085C19F02220110800D56A17 /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				085C19DC221FEBD500D56A17 /* ViewController.swift */,
+				085C19DC221FEBD500D56A17 /* ListItemViewController.swift */,
+				085C19F3222026A600D56A17 /* ItemViewController.swift */,
+				0822FD032220341D00F92330 /* ItemViewCell.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -162,7 +168,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				085C19DD221FEBD500D56A17 /* ViewController.swift in Sources */,
+				0822FD042220341D00F92330 /* ItemViewCell.swift in Sources */,
+				085C19DD221FEBD500D56A17 /* ListItemViewController.swift in Sources */,
+				085C19F4222026A600D56A17 /* ItemViewController.swift in Sources */,
 				085C19ED22200DEC00D56A17 /* Item.swift in Sources */,
 				085C19DB221FEBD500D56A17 /* AppDelegate.swift in Sources */,
 			);
