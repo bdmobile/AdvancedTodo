@@ -12,12 +12,17 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var items: [Item] = [Item(name: "Item 1", check: true), Item(name:"Item 2")]
+    var filteredItems = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupConstraints()
+        
+        // Reload the table
+        tableView.reloadData()
     }
     
     func setupConstraints() {
@@ -49,19 +54,36 @@ class ViewController: UIViewController {
         present(alerController, animated: true, completion: nil)
         
     }
+    
+    // MARK: - SearchBar methods
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchBar.text?.isEmpty ?? true
+    }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
-   
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        if (searchBarIsEmpty() == true) {
+            return self.items.count
+        } else {
+            return self.filteredItems.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier")!
-        let item = items[indexPath.row]
-        cell.textLabel?.text = item.name
-        cell.accessoryType = item.check ? .checkmark : .none
+        if (searchBarIsEmpty()) {
+            let item = items[indexPath.row]
+            cell.textLabel?.text = item.name
+            cell.accessoryType = item.check ? .checkmark : .none
+        } else {
+            let item = filteredItems[indexPath.row]
+            cell.textLabel?.text = item.name
+            cell.accessoryType = item.check ? .checkmark : .none
+        }
+        
         return cell
     }
     
@@ -73,3 +95,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+extension ViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredItems = items.filter({( item : Item) -> Bool in
+            return item.name.lowercased().contains(self.searchBar.text!.lowercased())
+        })
+        tableView.reloadData()
+    }
+}
