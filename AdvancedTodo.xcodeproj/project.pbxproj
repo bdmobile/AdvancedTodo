@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08247B2322200EB20090193E /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08247B2222200EB20090193E /* TodoItem.swift */; };
 		085C19DB221FEBD500D56A17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19DA221FEBD500D56A17 /* AppDelegate.swift */; };
 		085C19DD221FEBD500D56A17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19DC221FEBD500D56A17 /* ViewController.swift */; };
 		085C19E0221FEBD500D56A17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085C19DE221FEBD500D56A17 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08247B2222200EB20090193E /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		085C19D7221FEBD500D56A17 /* AdvancedTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdvancedTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085C19DA221FEBD500D56A17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		085C19DC221FEBD500D56A17 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,6 +37,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08247B2122200E6A0090193E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				08247B2222200EB20090193E /* TodoItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		085C19CE221FEBD500D56A17 = {
 			isa = PBXGroup;
 			children = (
@@ -54,6 +64,7 @@
 		085C19D9221FEBD500D56A17 /* AdvancedTodo */ = {
 			isa = PBXGroup;
 			children = (
+				08247B2122200E6A0090193E /* Model */,
 				085C19DA221FEBD500D56A17 /* AppDelegate.swift */,
 				085C19DC221FEBD500D56A17 /* ViewController.swift */,
 				085C19DE221FEBD500D56A17 /* Main.storyboard */,
@@ -136,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				085C19DD221FEBD500D56A17 /* ViewController.swift in Sources */,
+				08247B2322200EB20090193E /* TodoItem.swift in Sources */,
 				085C19DB221FEBD500D56A17 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
