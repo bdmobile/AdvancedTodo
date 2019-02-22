@@ -82,6 +82,8 @@ extension ListItemViewController: ItemViewControllerDelegate {
     }
     
     func ItemViewControllerDone(_ controller: ItemViewController, addingFinish item: Item) {
+        self.searchBar.text = ""
+        self.tableView.reloadData()
         self.dismiss(animated: true, completion: nil)
         self.items.append(item)
         self.tableView.insertRows(at: [IndexPath(row: self.items.count-1, section: 0)], with: .none)
