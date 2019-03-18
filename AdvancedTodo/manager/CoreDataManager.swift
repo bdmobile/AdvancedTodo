@@ -13,6 +13,7 @@ protocol CoreDataManagerDelegate {
     func saveData()
     func loadData()
     func deleteItem(item: Item)
+    func deleteCategory(category: Category)
 }
 
 class CoreDataManager {
@@ -20,6 +21,7 @@ class CoreDataManager {
     static var instance = CoreDataManager()
     
     var items: [Item] = []
+    var categories: [Category] = []
     
     private init() {
         self.loadData()
@@ -49,6 +51,10 @@ class CoreDataManager {
             }
         }
     }
+    
+    func getContext() -> NSManagedObjectContext{
+        return self.persistentContainer.viewContext
+    }
 }
 
 extension CoreDataManager: CoreDataManagerDelegate {
@@ -56,19 +62,29 @@ extension CoreDataManager: CoreDataManagerDelegate {
         self.persistentContainer.viewContext.delete(item)
     }
     
+    func deleteCategory(category: Category) {
+        self.persistentContainer.viewContext.delete(category)
+    }
+    
     func saveData() {
        self.saveContext()
     }
     
     func loadData() {
-        let fetchRequest : NSFetchRequest<Item> = NSFetchRequest<Item>(entityName: "Item")
+        let fetchRequestItem : NSFetchRequest<Item> = NSFetchRequest<Item>(entityName: "Item")
+        let fetcheRequestCategory : NSFetchRequest<Category> = NSFetchRequest<Category>(entityName: "Category")
+        
         do{
-            let fetchedResults = try self.persistentContainer.viewContext.fetch(fetchRequest)
-            let results = fetchedResults
-            self.items = results
+            let fetchedItemResults = try self.persistentContainer.viewContext.fetch(fetchRequestItem)
+            let resultsItem = fetchedItemResults
+            self.items = resultsItem
+            
+            let fetchedCategoryResults = try self.persistentContainer.viewContext.fetch(fetcheRequestCategory)
+            let resultsCategory = fetchedCategoryResults
+            self.categories = resultsCategory
         }
         catch {
-            print("Could not fetch :")
+            print("Could not fetch data")
         }
         
     }
