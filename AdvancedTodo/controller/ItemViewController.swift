@@ -46,7 +46,13 @@ class ItemViewController: UITableViewController {
             itemToEdit?.name = self.itemNameField.text!
             delegate?.ItemViewControllerDone(self, editingFinish: itemToEdit!)
         } else {
-            delegate.ItemViewControllerDone(self, addingFinish: Item(name: self.itemNameField.text!))
+            let context = CoreDataManager.instance.persistentContainer.viewContext
+            
+            let item = Item(context: context)
+            
+            item.name = self.itemNameField.text!
+            
+            delegate.ItemViewControllerDone(self, addingFinish: item)
         }
     }
 }
