@@ -39,6 +39,26 @@ class ListItemViewController: UIViewController {
         return searchBar.text?.isEmpty ?? true
     }
    
+    @IBAction func sortItem(_ sender: Any) {
+        let alert = UIAlertController(title: "Voulez vous filtrer par :", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
+        
+      
+        alert.addAction(UIAlertAction(title: "Nom", style: .default, handler: { action in
+            CoreDataManager.instance.loadData(query: [NSSortDescriptor(key: "name", ascending: true)])
+            self.tableView.reloadData()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Date", style: .default, handler: { action in
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Catégorie", style: .default, handler: { action in
+            
+        }))
+        
+        self.present(alert, animated: true)
+    }
 }
 
 extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {

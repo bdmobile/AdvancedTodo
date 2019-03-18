@@ -87,12 +87,19 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="List" id="8hf-Au-9XK">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Bfk-iV-JUv">
-                            <connections>
-                                <action selector="addItemClick:" destination="BYZ-38-t0r" id="1ml-d4-ouE"/>
-                                <segue destination="LAL-vb-9D3" kind="presentation" identifier="addItem" id="JbM-Rc-SHR"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="Bfk-iV-JUv">
+                                <connections>
+                                    <action selector="addItemClick:" destination="BYZ-38-t0r" id="1ml-d4-ouE"/>
+                                    <segue destination="LAL-vb-9D3" kind="presentation" identifier="addItem" id="JbM-Rc-SHR"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Sort" id="rtd-U9-GyZ">
+                                <connections>
+                                    <action selector="sortItem:" destination="BYZ-38-t0r" id="bvP-B2-0Cc"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="qoQ-na-oOa" id="yLf-5O-QZ8"/>
