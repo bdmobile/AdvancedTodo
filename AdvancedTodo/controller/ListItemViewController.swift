@@ -62,7 +62,7 @@ extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {
             let item = filteredItems[indexPath.row]
             cell.checkLabel.isHidden = !item.check
             cell.nameLabel.text = item.name
-            
+            cell.detailTextLabel?.text = item.category?.name
         }
         
         return cell
