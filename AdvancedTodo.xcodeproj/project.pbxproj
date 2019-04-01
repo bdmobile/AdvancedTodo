@@ -18,6 +18,7 @@
 		085C19E5221FEBD700D56A17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085C19E3221FEBD700D56A17 /* LaunchScreen.storyboard */; };
 		085C19ED22200DEC00D56A17 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19EC22200DEC00D56A17 /* Item.swift */; };
 		085C19F4222026A600D56A17 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085C19F3222026A600D56A17 /* ItemViewController.swift */; };
+		08EB69CA223FE74600D8D327 /* ListCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB69C9223FE74600D8D327 /* ListCategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		085C19E6221FEBD700D56A17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		085C19EC22200DEC00D56A17 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		085C19F3222026A600D56A17 /* ItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
+		08EB69C9223FE74600D8D327 /* ListCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				085C19DC221FEBD500D56A17 /* ListItemViewController.swift */,
 				085C19F3222026A600D56A17 /* ItemViewController.swift */,
 				0822FD032220341D00F92330 /* ItemViewCell.swift */,
+				08EB69C9223FE74600D8D327 /* ListCategoryViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 				0856C0F4223F8F7600E5D944 /* AdvancedTodo.xcdatamodeld in Sources */,
 				085C19DD221FEBD500D56A17 /* ListItemViewController.swift in Sources */,
 				085C19F4222026A600D56A17 /* ItemViewController.swift in Sources */,
+				08EB69CA223FE74600D8D327 /* ListCategoryViewController.swift in Sources */,
 				085C19ED22200DEC00D56A17 /* Item.swift in Sources */,
 				0822FD072220510700F92330 /* SaveDataManager.swift in Sources */,
 				0856C0F6223F921B00E5D944 /* CoreDataManager.swift in Sources */,
