@@ -92,11 +92,18 @@
                                 <segue destination="QEt-ls-esA" kind="show" id="YDl-r8-b2x"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Bfk-iV-JUv">
-                            <connections>
-                                <segue destination="LAL-vb-9D3" kind="presentation" identifier="addItem" id="JbM-Rc-SHR"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="Bfk-iV-JUv">
+                                <connections>
+                                    <segue destination="LAL-vb-9D3" kind="presentation" identifier="addItem" id="JbM-Rc-SHR"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Sort" id="sPJ-iS-WLu">
+                                <connections>
+                                    <action selector="sortItem:" destination="BYZ-38-t0r" id="wYo-yz-b36"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="qoQ-na-oOa" id="yLf-5O-QZ8"/>

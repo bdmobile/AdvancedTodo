@@ -11,7 +11,7 @@ import CoreData
 
 protocol CoreDataManagerDelegate {
     func saveData()
-    func loadData()
+    func loadData(query: [NSSortDescriptor]?)
     func deleteItem(item: Item)
     func deleteCategory(category: Category)
 }
@@ -24,7 +24,7 @@ class CoreDataManager {
     var categories: [Category] = []
     
     private init() {
-        self.loadData()
+        self.loadData(query: [NSSortDescriptor(key: "name", ascending: true)])
     }
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -70,10 +70,14 @@ extension CoreDataManager: CoreDataManagerDelegate {
        self.saveContext()
     }
     
-    func loadData() {
+    func loadData(query: [NSSortDescriptor]?) {
         let fetchRequestItem : NSFetchRequest<Item> = NSFetchRequest<Item>(entityName: "Item")
         let fetcheRequestCategory : NSFetchRequest<Category> = NSFetchRequest<Category>(entityName: "Category")
         
+        if (query != nil){
+            fetchRequestItem.sortDescriptors = query
+        }
+
         do{
             let fetchedItemResults = try self.persistentContainer.viewContext.fetch(fetchRequestItem)
             let resultsItem = fetchedItemResults
