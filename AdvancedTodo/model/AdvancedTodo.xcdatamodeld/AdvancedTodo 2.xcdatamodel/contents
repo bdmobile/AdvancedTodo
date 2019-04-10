@@ -4,7 +4,7 @@
         <attribute name="dateCrea" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="dateUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="category" inverseEntity="Item" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="category" inverseEntity="Item" syncable="YES"/>
     </entity>
     <entity name="Folder" representedClassName="Folder" syncable="YES" codeGenerationType="class">
         <attribute name="dateCrea" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -24,7 +24,7 @@
         <attribute name="dateUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="item" inverseEntity="Category" syncable="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="items" inverseEntity="Category" syncable="YES"/>
         <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="item" inverseEntity="Folder" syncable="YES"/>
         <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="item" inverseEntity="Image" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="item" inverseEntity="Tag" syncable="YES"/>
@@ -37,7 +37,7 @@
         <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="tags" inverseEntity="Item" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Category" positionX="-73.6640625" positionY="195.81640625" width="128" height="103"/>
+        <element name="Category" positionX="-73.6640625" positionY="195.81640625" width="128" height="105"/>
         <element name="Folder" positionX="28.44921875" positionY="336.35546875" width="128" height="103"/>
         <element name="Image" positionX="-338.23046875" positionY="536.26953125" width="128" height="103"/>
         <element name="Item" positionX="-173.43359375" positionY="310.48828125" width="128" height="178"/>

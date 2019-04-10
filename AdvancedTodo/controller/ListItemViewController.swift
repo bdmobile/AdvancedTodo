@@ -63,23 +63,37 @@ class ListItemViewController: UIViewController {
 
 extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {
     
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return CoreDataManager.instance.categories.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return CoreDataManager.instance.categories[section].name
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (searchBarIsEmpty() == true) {
-            return CoreDataManager.instance.items.count
+            return CoreDataManager.instance.categories[section].items!.count
         } else {
-            return self.filteredItems.count
+            let rowOfSection = filteredItems.filter { $0.category == CoreDataManager.instance.categories[section] }
+            return rowOfSection.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier") as! ItemViewCell
+        
+      
+        
         if (searchBarIsEmpty()) {
-            let item = CoreDataManager.instance.items[indexPath.row]
+            print(CoreDataManager.instance.categories[indexPath.section].items?.allObjects)
+            let item = CoreDataManager.instance.categories[indexPath.section].items?.allObjects[indexPath.row] as! Item
             cell.checkLabel.isHidden = !item.check
             cell.nameLabel.text = item.name
             
         } else {
-            let item = filteredItems[indexPath.row]
+            let item = filteredItems[indexPath.row]e
             cell.checkLabel.isHidden = !item.check
             cell.nameLabel.text = item.name
             cell.detailTextLabel?.text = item.category?.name
@@ -90,17 +104,17 @@ extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        CoreDataManager.instance.items[indexPath.row].toggleCheck()
-        tableView.reloadRows(at: [indexPath], with: .none)
+        (CoreDataManager.instance.categories[indexPath.section].items?.allObjects[indexPath.row] as! Item).toggleCheck()
+        tableView.reloadData()
         CoreDataManager.instance.saveData()
     }
     
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            CoreDataManager.instance.deleteItem(item: CoreDataManager.instance.items[indexPath.row])
-            CoreDataManager.instance.items.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            let item: Item = CoreDataManager.instance.categories[indexPath.section].items?.allObjects[indexPath.row] as! Item
+            CoreDataManager.instance.deleteItem(item: item)
+            self.tableView.reloadData()
             CoreDataManager.instance.saveData()
         }
     }
@@ -116,7 +130,7 @@ extension ListItemViewController: ItemViewControllerDelegate {
         self.tableView.reloadData()
         self.dismiss(animated: true, completion: nil)
         CoreDataManager.instance.items.append(item)
-        self.tableView.insertRows(at: [IndexPath(row:CoreDataManager.instance.items.count-1, section: 0)], with: .none)
+        self.tableView.reloadData()
         CoreDataManager.instance.saveData()
     }
     
@@ -124,7 +138,7 @@ extension ListItemViewController: ItemViewControllerDelegate {
         self.dismiss(animated: false, completion: nil)
         if let row = CoreDataManager.instance.items.firstIndex(where: {$0 === item}) {
             CoreDataManager.instance.items[row] = item
-            tableView.reloadRows(at: [IndexPath(row: row, section:0)], with: .none)
+            tableView.reloadData()
             CoreDataManager.instance.saveData()
         }
     }

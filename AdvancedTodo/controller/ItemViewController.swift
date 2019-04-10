@@ -14,27 +14,96 @@ protocol ItemViewControllerDelegate {
     func ItemViewControllerDone(_ controller: ItemViewController, editingFinish item: Item)
 }
 
-class ItemViewController: UITableViewController {
+class ItemViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var delegate: ListItemViewController!
     var itemToEdit: Item!
+    var itemToCreate: Item!
+    let imagePicker = UIImagePickerController()
+    let context = CoreDataManager.instance.persistentContainer.viewContext
     
+    @IBOutlet weak var categoryCell: UITableViewCell!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var itemNameField: UITextField!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "selectCategory") {
+            let selectCategoryViewController = segue.destination as! SelectCategoryViewController
+            selectCategoryViewController.setCategoryHandler = self.setCategory
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.imagePicker.delegate = self
         
         if((itemToEdit) != nil){
             self.itemNameField.text = itemToEdit?.name
             self.navigationItem.title = "Edit Item"
+            if let category = itemToEdit.category {
+                self.categoryCell.textLabel?.text = category.name
+            }
+            if let image = itemToEdit.image {
+                let imageWithData = UIImage(data: image.data!)
+                self.imageView.image = imageWithData
+            }
+        } else {
+           
+            
+            itemToCreate = Item(context: context)
+            
+            self.categoryCell.textLabel?.text = "Select Category"
+        
         }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.itemNameField.becomeFirstResponder()
-        self.doneButton.isEnabled = false
+        if((itemToEdit) != nil){
+            self.doneButton.isEnabled = true
+        } else {
+            self.doneButton.isEnabled = false
+        }
+        
+        if((itemNameField.text) != ""){
+            self.doneButton.isEnabled = true
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        if(indexPath.section == 1 && indexPath.row == 1){
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = .photoLibrary
+            
+            present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.imageView.image = image
+            let imageBin = image.jpegData(compressionQuality: 1)
+            if(itemToEdit != nil){
+                self.itemToEdit.image?.data = imageBin
+                self.itemToEdit.image?.dateUpdate = Date()
+            } else {
+                let finnalyImage = Image(context: context)
+                
+                finnalyImage.data = imageBin
+                finnalyImage.dateCrea = Date()
+                finnalyImage.dateUpdate = Date()
+                
+                self.itemToCreate.image = finnalyImage
+            }
+            
+        } else{
+            print("Something went wrong")
+        }
+        picker.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelClick(_ sender: Any) {
@@ -46,13 +115,10 @@ class ItemViewController: UITableViewController {
             itemToEdit?.name = self.itemNameField.text!
             delegate?.ItemViewControllerDone(self, editingFinish: itemToEdit!)
         } else {
-            let context = CoreDataManager.instance.persistentContainer.viewContext
+           
+            itemToCreate.name = self.itemNameField.text!
             
-            let item = Item(context: context)
-            
-            item.name = self.itemNameField.text!
-            
-            delegate.ItemViewControllerDone(self, addingFinish: item)
+            delegate.ItemViewControllerDone(self, addingFinish: itemToCreate)
         }
     }
 }
@@ -67,5 +133,17 @@ extension ItemViewController: UITextFieldDelegate {
             doneButton.isEnabled = true
         }
         return true
+    }
+}
+
+private extension ItemViewController {
+    func setCategory(view: UIViewController, category: Category) {
+        self.navigationController?.popViewController(animated: true)
+        if(itemToEdit != nil){
+            self.itemToEdit?.category = category
+        } else {
+            self.itemToCreate.category = category
+        }
+        self.categoryCell.textLabel?.text = category.name
     }
 }
