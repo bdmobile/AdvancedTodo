@@ -98,13 +98,25 @@ extension CoreDataManager: CoreDataManagerDelegate {
         
     }
     
-    func filterCategories(filter: String = "") -> NSFetchedResultsController<Item>{
-
+    func filterCategories(filter: String = "", sortByItemName: Bool = false, sortByDate: Bool = false) -> NSFetchedResultsController<Item>{
+        var sortDescriptor: [NSSortDescriptor] = []
         let fetchRequestItem : NSFetchRequest<Item> = NSFetchRequest<Item>(entityName: "Item")
-        fetchRequestItem.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
         if(filter != "") {
             fetchRequestItem.predicate = NSPredicate(format: "name CONTAINS [cd] \"\(filter)\"")
         }
+        sortDescriptor.append(NSSortDescriptor(key: "category.name", ascending: true))
+        
+        if(sortByItemName) {
+            sortDescriptor.append(NSSortDescriptor(key: "name", ascending: true))
+        }
+        
+        if(sortByDate) {
+            sortDescriptor.append(NSSortDescriptor(key: "dateUpdate", ascending: false))
+        }
+        
+        fetchRequestItem.sortDescriptors = sortDescriptor
+        
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequestItem,
                                                                   managedObjectContext: self.persistentContainer.viewContext,
                                                                   sectionNameKeyPath: "category.name", cacheName: nil)

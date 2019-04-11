@@ -12,6 +12,7 @@ class  ItemViewCell: UITableViewCell {
     
     @IBOutlet weak var checkLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     
     
 }
