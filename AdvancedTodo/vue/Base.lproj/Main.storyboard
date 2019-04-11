@@ -29,15 +29,15 @@
                                 <rect key="frame" x="0.0" y="120" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="CellIdentifier" id="bV4-Cd-Nmz" customClass="ItemViewCell" customModule="AdvancedTodo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="CellIdentifier" rowHeight="74" id="bV4-Cd-Nmz" customClass="ItemViewCell" customModule="AdvancedTodo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bV4-Cd-Nmz" id="YjF-hY-oth">
-                                            <rect key="frame" x="0.0" y="0.0" width="308" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="308" height="73.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✓" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NP9-HP-VG3">
-                                                    <rect key="frame" x="8" y="5.5" width="23" height="33"/>
+                                                    <rect key="frame" x="8" y="20.5" width="23" height="32.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="23" id="lQk-co-ZhC"/>
                                                     </constraints>
@@ -45,23 +45,35 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bG-53-A9d">
-                                                    <rect key="frame" x="39" y="11.5" width="253" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="udo-9l-eAZ">
+                                                    <rect key="frame" x="39" y="19.5" width="253" height="35"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bG-53-A9d">
+                                                            <rect key="frame" x="0.0" y="0.0" width="253" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aor-bl-4hQ" userLabel="Date Label">
+                                                            <rect key="frame" x="0.0" y="20.5" width="253" height="14.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="9bG-53-A9d" firstAttribute="centerY" secondItem="YjF-hY-oth" secondAttribute="centerY" id="BgM-sS-0GM"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="9bG-53-A9d" secondAttribute="trailing" constant="8" id="J3I-GV-vwq"/>
-                                                <constraint firstItem="9bG-53-A9d" firstAttribute="leading" secondItem="NP9-HP-VG3" secondAttribute="trailing" constant="8" id="dvs-PA-We5"/>
+                                                <constraint firstItem="udo-9l-eAZ" firstAttribute="centerY" secondItem="YjF-hY-oth" secondAttribute="centerY" id="B6d-Dm-q4i"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="udo-9l-eAZ" secondAttribute="trailing" constant="8" id="BXV-ud-SEC"/>
                                                 <constraint firstItem="NP9-HP-VG3" firstAttribute="leading" secondItem="YjF-hY-oth" secondAttribute="leading" constant="8" id="l2X-yf-8ZI"/>
+                                                <constraint firstItem="udo-9l-eAZ" firstAttribute="leading" secondItem="NP9-HP-VG3" secondAttribute="trailing" constant="8" id="u31-jB-s6e"/>
                                                 <constraint firstItem="NP9-HP-VG3" firstAttribute="centerY" secondItem="YjF-hY-oth" secondAttribute="centerY" id="xD9-nP-PET"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="checkLabel" destination="NP9-HP-VG3" id="GuA-dF-n7b"/>
+                                            <outlet property="dateLabel" destination="Aor-bl-4hQ" id="DDX-Qx-vWV"/>
                                             <outlet property="nameLabel" destination="9bG-53-A9d" id="9aA-nZ-eVp"/>
                                             <segue destination="LAL-vb-9D3" kind="presentation" identifier="editItem" trigger="accessoryAction" id="T5G-Qu-ZlT"/>
                                         </connections>
@@ -321,4 +333,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="T5G-Qu-ZlT"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="1" green="0.027607575530000001" blue="0.28757090969999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
 </document>

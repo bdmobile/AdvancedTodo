@@ -16,7 +16,6 @@ class ListItemViewController: UIViewController {
     
     var fetchController: NSFetchedResultsController<Item>!
     
-//    var filteredItems = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,12 +68,24 @@ class ListItemViewController: UIViewController {
         
       
         alert.addAction(UIAlertAction(title: "Nom", style: .default, handler: { action in
-            CoreDataManager.instance.loadData(query: [NSSortDescriptor(key: "name", ascending: true)])
-            self.tableView.reloadData()
+            self.fetchController = CoreDataManager.instance.filterCategories(sortByItemName: true)
+            do {
+                try self.fetchController.performFetch()
+                self.tableView.reloadData()
+            } catch {
+                
+            }
+            
         }))
         
         alert.addAction(UIAlertAction(title: "Date", style: .default, handler: { action in
-            
+            self.fetchController = CoreDataManager.instance.filterCategories(sortByDate: true)
+            do {
+                try self.fetchController.performFetch()
+                self.tableView.reloadData()
+            } catch {
+                
+            }
         }))
         
         alert.addAction(UIAlertAction(title: "Catégorie", style: .default, handler: { action in
@@ -107,11 +118,14 @@ extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier") as! ItemViewCell
-               
+        
         let item = fetchController.object(at: indexPath)
+        
+        if(item.name != nil){
         cell.checkLabel.isHidden = !item.check
         cell.nameLabel.text = item.name
-        
+        cell.dateLabel.text = formatDate(date: item.dateUpdate!)
+        }
         return cell
     }
     
@@ -140,6 +154,15 @@ extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {
             }
             CoreDataManager.instance.saveData()
         }
+    }
+    
+    func formatDate(date: Date) -> String{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM yyyy, HH:mm"
+        formatter.locale = Locale(identifier: "en")
+        let dateString = formatter.string(from: date)
+        
+        return dateString
     }
 }
 
@@ -184,10 +207,11 @@ extension ListItemViewController: UISearchBarDelegate, NSFetchedResultsControlle
         fetchController.delegate = self
         do {
             try fetchController.performFetch()
+            tableView.reloadData()
         } catch {
             
         }
         
-        tableView.reloadData()
+        
     }
 }

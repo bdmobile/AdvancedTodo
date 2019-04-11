@@ -113,10 +113,15 @@ class ItemViewController: UITableViewController, UIImagePickerControllerDelegate
     @IBAction func doneClick(_ sender: Any) {
         if(itemToEdit != nil){
             itemToEdit?.name = self.itemNameField.text!
+            itemToEdit.dateUpdate = Date()
+            
             delegate?.ItemViewControllerDone(self, editingFinish: itemToEdit!)
         } else {
            
             itemToCreate.name = self.itemNameField.text!
+            itemToCreate.dateCrea = Date()
+            itemToCreate.dateUpdate = Date()
+            
             
             delegate.ItemViewControllerDone(self, addingFinish: itemToCreate)
         }
