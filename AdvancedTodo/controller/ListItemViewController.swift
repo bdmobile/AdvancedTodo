@@ -27,7 +27,7 @@ class ListItemViewController: UIViewController {
             if let cell = sender as? UITableViewCell,
                 let indexPath = tableView.indexPath(for: cell){
                 let addItemViewController = (segue.destination as! UINavigationController).topViewController as! ItemViewController
-                addItemViewController.itemToEdit = CoreDataManager.instance.items[indexPath.row]
+                addItemViewController.itemToEdit = CoreDataManager.instance.categories[indexPath.section].items?.allObjects[indexPath.row] as? Item
                 addItemViewController.delegate = self
             }
         }
