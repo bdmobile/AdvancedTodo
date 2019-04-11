@@ -73,6 +73,8 @@ extension CoreDataManager: CoreDataManagerDelegate {
     func loadData(query: [NSSortDescriptor]?) {
         let fetchRequestItem : NSFetchRequest<Item> = NSFetchRequest<Item>(entityName: "Item")
         let fetcheRequestCategory : NSFetchRequest<Category> = NSFetchRequest<Category>(entityName: "Category")
+//        let searchQuery = "Coucou"
+//        fetcheRequestCategory.predicate = NSPredicate(format: "SUBQUERY(items, $item, $item.name ==[cd] \"\(searchQuery)\").@count > 0")
         
         if (query != nil){
             fetchRequestItem.sortDescriptors = query
@@ -87,11 +89,27 @@ extension CoreDataManager: CoreDataManagerDelegate {
             let fetchedCategoryResults = try self.persistentContainer.viewContext.fetch(fetcheRequestCategory)
             let resultsCategory = fetchedCategoryResults
             self.categories = resultsCategory
+            
+        
         }
         catch {
             print("Could not fetch data")
         }
         
+    }
+    
+    func filterCategories(filter: String = "") -> NSFetchedResultsController<Item>{
+
+        let fetchRequestItem : NSFetchRequest<Item> = NSFetchRequest<Item>(entityName: "Item")
+        fetchRequestItem.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        if(filter != "") {
+            fetchRequestItem.predicate = NSPredicate(format: "name CONTAINS [cd] \"\(filter)\"")
+        }
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequestItem,
+                                                                  managedObjectContext: self.persistentContainer.viewContext,
+                                                                  sectionNameKeyPath: "category.name", cacheName: nil)
+        
+        return fetchedResultsController
     }
     
 }

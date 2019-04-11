@@ -7,16 +7,27 @@
 //
 
 import UIKit
+import CoreData
 
 class ListItemViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var filteredItems = [Item]()
+    var fetchController: NSFetchedResultsController<Item>!
+    
+//    var filteredItems = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchController = CoreDataManager.instance.filterCategories()
+        fetchController.delegate = self
+        do {
+            try fetchController.performFetch()
+        } catch {
+            
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -27,7 +38,7 @@ class ListItemViewController: UIViewController {
             if let cell = sender as? UITableViewCell,
                 let indexPath = tableView.indexPath(for: cell){
                 let addItemViewController = (segue.destination as! UINavigationController).topViewController as! ItemViewController
-                addItemViewController.itemToEdit = CoreDataManager.instance.categories[indexPath.section].items?.allObjects[indexPath.row] as? Item
+                addItemViewController.itemToEdit = fetchController.object(at: indexPath)
                 addItemViewController.delegate = self
             }
         }
@@ -65,45 +76,40 @@ extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return CoreDataManager.instance.categories.count
+         return fetchController.sections!.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return CoreDataManager.instance.categories[section].name
+        return fetchController.sections![section].name
+        //return CoreDataManager.instance.categories[section].name
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (searchBarIsEmpty() == true) {
-            return CoreDataManager.instance.categories[section].items!.count
-        } else {
-            let rowOfSection = filteredItems.filter { $0.category == CoreDataManager.instance.categories[section] }
-            return rowOfSection.count
-        }
+        
+        guard let sectionInfo = fetchController.sections?[section]  else { return 0 }
+        
+        return sectionInfo.numberOfObjects
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier") as! ItemViewCell
-        
-      
-        
-        if (searchBarIsEmpty()) {
-            let item = CoreDataManager.instance.categories[indexPath.section].items?.allObjects[indexPath.row] as! Item
-            cell.checkLabel.isHidden = !item.check
-            cell.nameLabel.text = item.name
-            
-        } else {
-            let item = filteredItems[indexPath.row]
-            cell.checkLabel.isHidden = !item.check
-            cell.nameLabel.text = item.name
-            cell.detailTextLabel?.text = item.category?.name
-        }
+               
+        let item = fetchController.object(at: indexPath)
+        cell.checkLabel.isHidden = !item.check
+        cell.nameLabel.text = item.name
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        (CoreDataManager.instance.categories[indexPath.section].items?.allObjects[indexPath.row] as! Item).toggleCheck()
+        fetchController.object(at: indexPath).toggleCheck()
+        do {
+            try fetchController.performFetch()
+        } catch {
+            
+        }
         tableView.reloadData()
         CoreDataManager.instance.saveData()
     }
@@ -111,10 +117,14 @@ extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let item: Item = CoreDataManager.instance.categories[indexPath.section].items?.allObjects[indexPath.row] as! Item
+            let item: Item = fetchController.object(at: indexPath)
             CoreDataManager.instance.deleteItem(item: item)
-            CoreDataManager.instance.categories[indexPath.section].removeFromItems(item)
-            self.tableView.reloadData()
+            do {
+                try fetchController.performFetch()
+                self.tableView.reloadData()
+            } catch {
+                
+            }
             CoreDataManager.instance.saveData()
         }
     }
@@ -127,10 +137,14 @@ extension ListItemViewController: ItemViewControllerDelegate {
     
     func ItemViewControllerDone(_ controller: ItemViewController, addingFinish item: Item) {
         self.searchBar.text = ""
-        self.tableView.reloadData()
         self.dismiss(animated: true, completion: nil)
         CoreDataManager.instance.items.append(item)
-        self.tableView.reloadData()
+        do {
+            try fetchController.performFetch()
+            self.tableView.reloadData()
+        } catch {
+            
+        }
         CoreDataManager.instance.saveData()
     }
     
@@ -138,18 +152,29 @@ extension ListItemViewController: ItemViewControllerDelegate {
         self.dismiss(animated: false, completion: nil)
         if let row = CoreDataManager.instance.items.firstIndex(where: {$0 === item}) {
             CoreDataManager.instance.items[row] = item
-            tableView.reloadData()
+            do {
+                try fetchController.performFetch()
+                self.tableView.reloadData()
+            } catch {
+                
+            }
             CoreDataManager.instance.saveData()
         }
     }
     
 }
 
-extension ListItemViewController: UISearchBarDelegate {
+extension ListItemViewController: UISearchBarDelegate, NSFetchedResultsControllerDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredItems = CoreDataManager.instance.items.filter({( item : Item) -> Bool in
-            return item.name!.lowercased().contains(self.searchBar.text!.lowercased())
-        })
+
+        fetchController = CoreDataManager.instance.filterCategories(filter: searchText)
+        fetchController.delegate = self
+        do {
+            try fetchController.performFetch()
+        } catch {
+            
+        }
+        
         tableView.reloadData()
     }
 }
