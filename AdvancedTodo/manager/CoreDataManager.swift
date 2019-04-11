@@ -76,8 +76,9 @@ extension CoreDataManager: CoreDataManagerDelegate {
         
         if (query != nil){
             fetchRequestItem.sortDescriptors = query
+            
         }
-
+        
         do{
             let fetchedItemResults = try self.persistentContainer.viewContext.fetch(fetchRequestItem)
             let resultsItem = fetchedItemResults

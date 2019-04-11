@@ -87,13 +87,12 @@ extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {
       
         
         if (searchBarIsEmpty()) {
-            print(CoreDataManager.instance.categories[indexPath.section].items?.allObjects)
             let item = CoreDataManager.instance.categories[indexPath.section].items?.allObjects[indexPath.row] as! Item
             cell.checkLabel.isHidden = !item.check
             cell.nameLabel.text = item.name
             
         } else {
-            let item = filteredItems[indexPath.row]e
+            let item = filteredItems[indexPath.row]
             cell.checkLabel.isHidden = !item.check
             cell.nameLabel.text = item.name
             cell.detailTextLabel?.text = item.category?.name
@@ -114,6 +113,7 @@ extension ListItemViewController: UITableViewDelegate, UITableViewDataSource {
         if editingStyle == .delete {
             let item: Item = CoreDataManager.instance.categories[indexPath.section].items?.allObjects[indexPath.row] as! Item
             CoreDataManager.instance.deleteItem(item: item)
+            CoreDataManager.instance.categories[indexPath.section].removeFromItems(item)
             self.tableView.reloadData()
             CoreDataManager.instance.saveData()
         }
