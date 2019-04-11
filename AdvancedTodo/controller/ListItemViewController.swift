@@ -25,6 +25,19 @@ class ListItemViewController: UIViewController {
         fetchController.delegate = self
         do {
             try fetchController.performFetch()
+             self.tableView.reloadData()
+        } catch {
+            
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(false)
+        fetchController = CoreDataManager.instance.filterCategories()
+        fetchController.delegate = self
+        do {
+            try fetchController.performFetch()
+            self.tableView.reloadData()
         } catch {
             
         }
