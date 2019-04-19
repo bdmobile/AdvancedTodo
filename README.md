@@ -23,6 +23,8 @@ Pendant les cours de base de données mobile, nous avons pu ajouter plusieurs fo
 
 ## Navigation dans l’application 
 
+<img src="Documentation/Navigation.PNG">
+
 ## Architecture du projet 
 
 Nous avons décidé d’utiliser une simple architecture `MVC` car l’application ne demandait pas une architecture plus compliquée. Si nous devions ajouter un stockage des données sur un serveur distant, nous serions certainement passé en `MVP` ou en `MVVM`.
